@@ -4,8 +4,7 @@ import logging
 import twilio
 from twilio import TwilioException
 from twilio import TwilioRestException
-from urllib import urlencode
-from urlparse import urlparse
+from urllib.parse import urlencode, urlparse
 
 # import json
 try:
@@ -119,6 +118,7 @@ def make_request(method, url,
 
     Currently proxies, files, and cookies are all ignored
     """
+    print(method, url)
     http = httplib2.Http(timeout=timeout)
     http.follow_redirects = allow_redirects
 
@@ -127,11 +127,11 @@ def make_request(method, url,
 
     if data is not None:
         udata = {}
-        for k, v in data.iteritems():
+        for k, v in data.items():
             try:
-                udata[k.encode('utf-8')] = unicode(v).encode('utf-8')
+                udata[k.encode('utf-8')] = v.encode('utf-8')
             except UnicodeDecodeError:
-                udata[k.encode('utf-8')] = unicode(v, 'utf-8').encode('utf-8')
+                udata[k.encode('utf-8')] = str(v, 'utf-8').encode('utf-8')
         data = urlencode(udata)
 
     if params is not None:
@@ -206,7 +206,7 @@ class Resource(object):
         if method == "DELETE":
             return resp, {}
         else:
-            return resp, json.loads(resp.content)
+            return resp, json.loads(resp.content.decode("utf-8"))
 
     @property
     def uri(self):

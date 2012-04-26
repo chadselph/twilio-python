@@ -16,8 +16,7 @@ from twilio.rest.resources import Participants
 from twilio.rest.resources import PhoneNumbers
 from twilio.rest.resources import Conferences
 from twilio.rest.resources import Sandboxes
-from urllib import urlencode
-from urlparse import urljoin
+from urllib.parse import urlencode, urljoin
 
 
 def find_credentials():
