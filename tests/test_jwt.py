@@ -74,7 +74,7 @@ class TokenTest(unittest.TestCase):
         incoming_uri = "scope:client:incoming?clientName=andy"
         event_uri = "scope:stream:subscribe?path=%2F2010-04-01%2FEvents"
 
-        result = jwt.decode(token.generate(), "XXXXX")
+        result = jwt.decode(token.generate().encode('ascii'), b"XXXXX")
         scope = result["scope"].split(" ")
 
         self.assertIn(outgoing_uri, scope)

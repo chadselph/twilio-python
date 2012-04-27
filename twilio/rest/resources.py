@@ -76,7 +76,7 @@ def convert_keys(d):
 
     result = {}
 
-    for k, v in d.iteritems():
+    for k, v in d.items():
         if k in special:
             result[special[k]] = v
         else:
@@ -87,7 +87,7 @@ def convert_keys(d):
 
 def normalize_dates(myfunc):
     def inner_func(*args, **kwargs):
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             res = [True for s in ["after", "before", "on"] if s in k]
             if len(res):
                 kwargs[k] = parse_date(v)
@@ -129,7 +129,9 @@ def make_request(method, url,
         udata = {}
         for k, v in data.items():
             try:
-                udata[k.encode('utf-8')] = v.encode('utf-8')
+                k_utf8 = k if isinstance(k, bytes) else k.encode('utf-8')
+                v_utf8 = v if isinstance(v, bytes) else v.encode('utf-8')
+                udata[k_utf8] = v_utf8
             except UnicodeDecodeError:
                 udata[k.encode('utf-8')] = str(v, 'utf-8').encode('utf-8')
         data = urlencode(udata)
@@ -560,7 +562,7 @@ class AuthorizedConnectApp(ConnectApp):
         """ Translate certain parameters into others"""
         result = {}
 
-        for k, v in entries.iteritems():
+        for k, v in entries.items():
             k = k.replace("connect_app_", "")
             result[k] = v
 

@@ -20,7 +20,7 @@ class AuthorizedConnectAppTest(unittest.TestCase):
     @patch("twilio.rest.resources.make_twilio_request")
     def test_get(self, mock):
         mock.return_value = Mock()
-        mock.return_value.content = '{"connect_app_sid": "SID"}'
+        mock.return_value.content = b'{"connect_app_sid": "SID"}'
 
         self.resource.get("SID")
         mock.assert_called_with("GET", "/base/AuthorizedConnectApps/SID",
@@ -29,7 +29,7 @@ class AuthorizedConnectAppTest(unittest.TestCase):
     @patch("twilio.rest.resources.make_twilio_request")
     def test_list(self, mock):
         mock.return_value = Mock()
-        mock.return_value.content = '{"authorized_connect_apps": []}'
+        mock.return_value.content = b'{"authorized_connect_apps": []}'
 
         self.resource.list()
         mock.assert_called_with("GET", "/base/AuthorizedConnectApps",

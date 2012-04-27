@@ -32,5 +32,5 @@ class RestClientTest(unittest.TestCase):
     def test_conferences(self, mock):
         mock.return_value = Mock()
         mock.return_value.ok = True
-        mock.return_value.content = '{"conferences": []}'
+        mock.return_value.content = b'{"conferences": []}'
         self.client.conferences.list()

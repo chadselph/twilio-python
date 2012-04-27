@@ -40,15 +40,15 @@ def test_double_encoding(resp_mock, mock):
     http = mock.return_value
     http.request.return_value = (Mock(), Mock())
 
-    body = u"Chloéñ"
+    body = "Chloéñ"
 
     data = {
         "body": body.encode('utf-8'),
         }
-    
+
     resources.make_request("GET", "http://www.example.com", data=data)
 
-    http.request.assert_called_with("http://www.example.com", "GET", 
+    http.request.assert_called_with("http://www.example.com", "GET",
             headers=None, body="body=Chlo%C3%A9%C3%B1")
 
 
@@ -59,7 +59,7 @@ def test_paging(resp_mock, mock):
     http.request.return_value = (Mock(), Mock())
 
     data = {
-        "body": u"Chloéñ",
+        "body": "Chloéñ",
         }
     
     resources.make_request("GET", "http://www.example.com", data=data)

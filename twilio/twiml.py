@@ -37,7 +37,7 @@ class Verb(object):
                 self.attrs[k] = v
 
     def __str__(self):
-        return self.toxml()
+        return self.toxml().decode('utf-8')
 
     def __enter__(self):
         return self
@@ -52,17 +52,17 @@ class Verb(object):
         :param bool xml_declaration: Include the XML declaration. Defaults to
                                      True
         """
-        xml = ET.tostring(self.xml()).encode("utf-8")
+        xml = ET.tostring(self.xml(), encoding="utf-8")
 
         if xml_declaration:
-            return u'<?xml version="1.0" encoding="UTF-8"?>' + xml
+            return b'<?xml version="1.0" encoding="UTF-8"?>' + xml
         else:
             return xml
 
     def xml(self):
         el = ET.Element(self.name)
 
-        keys = self.attrs.keys()
+        keys = list(self.attrs.keys())
         keys.sort()
         for a in keys:
             value = self.attrs[a]
@@ -81,7 +81,6 @@ class Verb(object):
         return el
 
     def append(self, verb):
-        print self.nestables
         if not self.nestables or verb.name not in self.nestables:
             raise TwimlException("%s is not nestable inside %s" % \
                 (verb.name, self.name))

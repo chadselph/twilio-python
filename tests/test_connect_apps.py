@@ -21,7 +21,7 @@ class ConnectAppTest(unittest.TestCase):
     @patch("twilio.rest.resources.make_twilio_request")
     def test_get(self, mock):
         mock.return_value = Mock()
-        mock.return_value.content = '{"sid": "SID"}' 
+        mock.return_value.content = b'{"sid": "SID"}'
 
         self.resource.get("SID")
         mock.assert_called_with("GET", "/base/ConnectApps/SID",
@@ -30,7 +30,7 @@ class ConnectAppTest(unittest.TestCase):
     @patch("twilio.rest.resources.make_twilio_request")
     def test_list_with_paging(self, mock):
         mock.return_value = Mock()
-        mock.return_value.content = '{"connect_apps": []}'
+        mock.return_value.content = b'{"connect_apps": []}'
 
         self.resource.list(page=1, page_size=50)
         mock.assert_called_with("GET", "/base/ConnectApps",
@@ -39,7 +39,7 @@ class ConnectAppTest(unittest.TestCase):
     @patch("twilio.rest.resources.make_twilio_request")
     def test_list(self, mock):
         mock.return_value = Mock()
-        mock.return_value.content = '{"connect_apps": []}'
+        mock.return_value.content = b'{"connect_apps": []}'
 
         self.resource.list()
         mock.assert_called_with("GET", "/base/ConnectApps",

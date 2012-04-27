@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import with_statement
+
 import re
 import twilio
 import sys
@@ -58,8 +58,8 @@ class TestSay(TwilioTest):
     def testSayFrench(self):
         """should say hello monkey"""
         r = Response()
-        r.append(twiml.Say(u"nécessaire et d'autres"))
-        self.assertEquals(unicode(r),
+        r.append(twiml.Say("nécessaire et d'autres"))
+        self.assertEquals(str(r),
                           '<?xml version="1.0" encoding="UTF-8"?><Response><Say>n&#233;cessaire et d\'autres</Say></Response>')
 
     def testSayLoop(self):
@@ -455,7 +455,7 @@ class TestGather(TwilioTest):
     def testNoDeclaration(self):
         """add attribute"""
         r = twiml.Gather(foo="bar")
-        self.assertEquals(r.toxml(xml_declaration=False), '<Gather foo="bar" />')
+        self.assertEquals(r.toxml(xml_declaration=False), b'<Gather foo="bar" />')
 
     def testImproperNesting(self):
         """ bad nesting"""
